@@ -1,6 +1,6 @@
 import { App, ExpressReceiver } from '@slack/bolt';
 import { Block } from '@slack/types';
-import { Modal, context, plainText, section, divider, mrkdwnText, datepicker, option, staticSelect, input, plainTextInput, actions, button } from 'block-kit-handler';
+import { Modal, context, plainText, section, divider, mrkdwnText, datepicker, option, staticSelect, input, plainTextInput, actions, button, HomeTab } from 'block-kit-handler';
 
 // ------------------------
 // Bolt App Initialization
@@ -78,7 +78,7 @@ app.command("/modal", async ({ ack, payload, context }) => {
         actions([
             button(plainText('Send feedback'), 'send-feedback', { value: 'click_me_123' }),
             button(plainText('FAQs'), 'faqs', { value: 'click_me_123' })
-        ]),
+        ])
     ];
 
     // build modal
@@ -90,6 +90,44 @@ app.command("/modal", async ({ ack, payload, context }) => {
         trigger_id: payload.trigger_id,
         view: modal.getView()
     });
+});
+
+app.event('app_home_opened', async({ context, body }) => {
+    // declare blocks for home tab
+    const blocks: Block[] = [
+        section({ text: mrkdwnText('*Here\'s what you can do with Project Tracker:*')}),
+        actions([
+            button(plainText('Create New Task'), 'create-new-task', { value: 'click_me_123', style: 'primary' }),
+            button(plainText('Create New Project'), 'create-new-project', { value: 'click_me_123' }),
+            button(plainText('Help'), 'help', { value: 'click_me_123' })
+        ]),
+        section({ text: mrkdwnText('*Your Configurations*')}),
+        divider(),
+        section({
+            text: mrkdwnText('*#public-relations*\n<fakelink.toUrl.com|PR Strategy 2019> posts new tasks, comments, and project updates to <fakelink.toChannel.com|#public-relations>'),
+            accessory: button(plainText('Edit'), 'edit-1', { value: 'public-relations' })
+        }),
+        divider(),
+        section({
+            text: mrkdwnText('*#team-updates*\n<fakelink.toUrl.com|Q4 Team Projects> posts project updates to <fakelink.toChannel.com|#team-updates>'),
+            accessory: button(plainText('Edit'), 'edit-2', { value: 'public-relations' })
+        }),
+        divider(),
+        actions([
+            button(plainText('New Configuration'), 'new-configuration', { value: 'new_configuration' })
+        ])
+    ];
+
+    // build home tab
+    const homeTab = new HomeTab(blocks);
+
+    // publish home tab
+    app.client.views.publish({
+        token: context.botToken,
+        user_id: body.user_id,
+        view: homeTab.getView()
+    });
+
 });
 
 
