@@ -1,0 +1,32 @@
+{
+  "name": "block-kit-handler-examples",
+  "version": "1.0.0",
+  "description": "Example usages of block-kit-handler",
+  "main": ".dist/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "tsc --build && node .dist/index.js",
+    "build": "tsc",
+    "watch": "tsc --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/saito-ya/block-kit-handler-examples.git"
+  },
+  "keywords": [
+    "Slack",
+    "Block Kit",
+    "block-kit-handler"
+  ],
+  "author": "SAITO Yasuo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/saito-ya/block-kit-handler-examples/issues"
+  },
+  "homepage": "https://github.com/saito-ya/block-kit-handler-examples#readme",
+  "dependencies": {
+    "@slack/bolt": "^2.1.1",
+    "block-kit-handler": "^0.9.4",
+    "typescript": "^3.9.3"
+  }
+}
