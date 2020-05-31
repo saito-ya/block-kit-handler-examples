@@ -122,7 +122,7 @@ app.event('app_home_opened', async({ context, body }) => {
     const homeTab = new HomeTab(blocks);
 
     // publish home tab
-    app.client.views.publish({
+    await app.client.views.publish({
         token: context.botToken,
         user_id: body.user_id,
         view: homeTab.getView()
