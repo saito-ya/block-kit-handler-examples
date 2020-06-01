@@ -93,8 +93,6 @@ app.command("/modal", async ({ ack, payload, context }) => {
 });
 
 app.event('app_home_opened', async({ context, body }) => {
-    console.log(`body: ${JSON.stringify(body)}`);
-
     // declare blocks for home tab
     const blocks: Block[] = [
         section({ text: mrkdwnText('*Here\'s what you can do with Project Tracker:*')}),
@@ -126,7 +124,7 @@ app.event('app_home_opened', async({ context, body }) => {
     // publish home tab
     await app.client.views.publish({
         token: context.botToken,
-        user_id: body.user_id,
+        user_id: body.event.user,
         view: homeTab.getView()
     });
 
