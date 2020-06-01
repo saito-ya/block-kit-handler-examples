@@ -93,6 +93,8 @@ app.command("/modal", async ({ ack, payload, context }) => {
 });
 
 app.event('app_home_opened', async({ context, body }) => {
+    console.log(`body: ${JSON.stringify(body)}`);
+
     // declare blocks for home tab
     const blocks: Block[] = [
         section({ text: mrkdwnText('*Here\'s what you can do with Project Tracker:*')}),
